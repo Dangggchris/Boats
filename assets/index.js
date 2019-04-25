@@ -32,25 +32,37 @@ $(document).ready(function() {
       });
     })
 
-    database.ref().on("child_added", function(snapshot) {
+    setInterval(updateTime, 1000);
 
-		var name = $("<td>").text(snapshot.val().name.trim());
-		var destination = $("<td>").text(snapshot.val().destination.trim());
-        var frequency = $("<td>").text(snapshot.val().frequency.trim());
-        var nextArrival = $("<td>").text(snapshot.val().firstTime.trim());
+    function updateTime () {
 
-        // using moment.js to calculate minutes til next boat
-        var first = snapshot.val().firstTime;
-        var time = moment(first, 'HH:mm');
-        var current = moment();
-        var next = current.diff(time, 'minutes');
-        var diff = next % snapshot.val().frequency;
-        var left = $("<td>").text(snapshot.val().frequency - diff);
+        $(".display").empty();
 
-        $(".display").append($("<tr>").append([name, destination, frequency, nextArrival, left]));
-        // console.log(name, destination, frequency);
-    }, function(errorObject) {
-        console.log("Errors handled: " + errorObject.code);
-    });
+        database.ref().on("child_added", function(snapshot) {
 
+            var name = $("<td>").text(snapshot.val().name.trim());
+            var destination = $("<td>").text(snapshot.val().destination.trim());
+            var frequency = $("<td>").text(snapshot.val().frequency.trim());
+            
+
+            // using moment.js to calculate minutes til next boat
+            var first = snapshot.val().firstTime;
+            var time = moment(first, 'hh:mm a');
+            var nextArrival = $("<td>").text(time.format('hh:mm a'));
+            var current = moment();
+            
+            if (current.isBefore(time)) {
+                // console.log("if before");
+                var minLeft = time.diff(current, 'minutes');
+                var next = $("<td>").text(minLeft);
+                $(".display").append($("<tr>").append([name, destination, frequency, nextArrival, next]));
+            }
+
+           
+        }, function(errorObject) {
+            console.log("Errors handled: " + errorObject.code);
+        });
+    }
+
+    
 })
