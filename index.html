@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>I'm On a Boat</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="assets/index.js"></script>
@@ -26,23 +28,18 @@
                 Current Boat Schedule
             </div>
             <div class="container">
-                <div class="row mt-2">
-                        <div class="col-sm-2"><h5>Boat Name</h5></div>
-                            <p id="boatName"></p>
-
-                        <div class="col-sm-2"><h5>Destination</h5></div>
-                            <div id="destination"></div>
-
-                        <div class="col-sm-2"><h5>Frequency</h5></div>
-                            <div id="frequency"></div>
-
-                        <div class="col-sm-2"><h5>Next Arrival</h5></div>
-                            <div id="nextArrival"></div>
-
-                        <div class="col-sm-2"><h5>Minutes Away</h5></div>
-                            <div id="minutesAway"></div>
-
-                </div>
+                    <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Frequency</th>
+                                <th scope="col">Next Arrival</th>
+                                <th scope="col">Minutes Away</th>
+                              </tr>
+                            </thead>
+                            <tbody class="display"></tbody>
+                          </table>
             </div>
         </div>
     </div>
@@ -55,28 +52,28 @@
             <div class="container p-3">
                 <form>
                         <div class="form-group">
-                            <label for="formGroupExampleInput">Boat Name</label>
+                            <label for="BoatName">Boat Name</label>
                                 <input type="text" class="form-control" id="inputName" placeholder="E.g. SunnyGo">
                         </div>
 
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Destination</label>
+                            <label for="Destination">Destination</label>
                                 <input type="text" class="form-control" id="inputDest" placeholder="E.g. Loguetown, Dressrosa, etc...">
                         </div>
 
                         <div class="form-group">
-                            <label for="formGroupExampleInput">First Boat Time</label>
+                            <label for="BoatTime">First Boat Time</label>
                                 <input type="time" class="form-control" id="inputFirst" placeholder="Departure Time">
                         </div>
 
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Frequency</label>
+                            <label for="Frequency">Frequency</label>
                                 <input type="number" class="form-control" id="inputFreq" placeholder="10, 15, 20 min, etc...">
                         </div>
                 </form>
                 
                 <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary" id="submitToMe">Sign in</button>
+                        <button type="submit" class="btn btn-primary" id="submitToMe">Submit</button>
                 </div>
             </div>
         </div>
