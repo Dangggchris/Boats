@@ -44,25 +44,27 @@ $(document).ready(function() {
             var destination = $("<td>").text(snapshot.val().destination.trim());
             var frequency = $("<td>").text(snapshot.val().frequency.trim());
             
+            var freqNum = snapshot.val().frequency.trim();
 
             // using moment.js to calculate minutes til next boat
             var first = snapshot.val().firstTime;
-            var time = moment(first, 'hh:mm a');
-            var nextArrival = $("<td>").text(time.format('hh:mm a'));
+            var firstTimeConverted = moment(first, "HH:mm").subtract(1, "years");
             var current = moment();
-            
-            if (current.isBefore(time)) {
-                // console.log("if before");
-                var minLeft = time.diff(current, 'minutes');
-                var next = $("<td>").text(minLeft);
-                $(".display").append($("<tr>").append([name, destination, frequency, nextArrival, next]));
-            }
 
-           
+            
+            var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+            var tRemainder = diffTime % freqNum;
+            var next = freqNum - tRemainder;
+            var nextTime = moment().add(next, "minutes");
+            console.log("next is: " + next)
+            var nextArrival = $("<td>").text(moment(nextTime).format("hh:mm a"));
+            var next = $("<td>").text(next);
+            
+            $(".display").append($("<tr>").append([name, destination, frequency, nextArrival, next]));
+
         }, function(errorObject) {
             console.log("Errors handled: " + errorObject.code);
         });
     }
 
-    
 })
